@@ -247,21 +247,24 @@ garm_list_path = [os.path.join(example_path,"cloth",garm) for garm in garm_list]
 human_list = os.listdir(os.path.join(example_path,"human"))
 human_list_path = [os.path.join(example_path,"human",human) for human in human_list]
 
-human_ex_list = []
-for ex_human in human_list_path:
-    ex_dict= {}
-    ex_dict['background'] = ex_human
-    ex_dict['layers'] = None
-    ex_dict['composite'] = None
-    human_ex_list.append(ex_dict)
 
-##default human
+# Example list of URLs with the correct format for Gradio
+image_urls = [
+    "https://raw.githubusercontent.com/neuralthread/Virtual-Ecommerce-Try-on/main/model_images/indian_man_full_body.jpg",
+    "https://raw.githubusercontent.com/neuralthread/Virtual-Ecommerce-Try-on/main/model_images/indian_man_full_body2.jpg",
+    "https://raw.githubusercontent.com/neuralthread/Virtual-Ecommerce-Try-on/main/model_images/indian_man_full_body2png.png",
+    "https://raw.githubusercontent.com/neuralthread/Virtual-Ecommerce-Try-on/main/model_images/indian_woman_full_body.jpg",
+    "https://raw.githubusercontent.com/neuralthread/Virtual-Ecommerce-Try-on/main/model_images/white_man_full_body.jpg",
+    "https://raw.githubusercontent.com/neuralthread/Virtual-Ecommerce-Try-on/main/model_images/white_woman_full_body.jpg"
+]
 
+# Convert URLs to the format expected by Gradio (list of lists if you have one input connected to examples)
+image_examples = [[url] for url in image_urls]
 
 image_blocks = gr.Blocks().queue()
 with image_blocks as demo:
-    gr.Markdown("## IDM-VTON 👕👔👚")
-    gr.Markdown("Virtual Try-on with your image and garment image. Check out the [source codes](https://github.com/yisol/IDM-VTON) and the [model](https://huggingface.co/yisol/IDM-VTON)")
+    gr.Markdown("## NeuralThread AI - Virtual Ecommerce Try on ")
+    gr.Markdown("Virtual Try-on with your image and garment image. Check out the [source codes](https://github.com/neuralthread/Virtual-Ecommerce-Try-on) and the [ Reference models](https://github.com/sangyun884/HR-VITON) [ Reference models](https://huggingface.co/spaces/svjack/HR-VITON-streamlit)")
     with gr.Row():
         with gr.Column():
             imgs = gr.ImageEditor(sources='upload', type="pil", label='Human. Mask with pen or use auto-masking', interactive=True)
@@ -273,7 +276,7 @@ with image_blocks as demo:
             example = gr.Examples(
                 inputs=imgs,
                 examples_per_page=10,
-                examples=human_ex_list
+                examples=ima
             )
 
         with gr.Column():
@@ -309,5 +312,5 @@ with image_blocks as demo:
             
 
 
-image_blocks.launch()
+image_blocks.launch(share=True)
 
