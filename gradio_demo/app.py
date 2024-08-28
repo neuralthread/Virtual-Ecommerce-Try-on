@@ -276,7 +276,7 @@ with image_blocks as demo:
             example = gr.Examples(
                 inputs=imgs,
                 examples_per_page=10,
-                examples=ima
+                examples=image_examples
             )
 
         with gr.Column():
